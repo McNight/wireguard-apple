@@ -111,6 +111,10 @@ extension ManageTunnelsRootViewController: TunnelsListTableViewControllerDelegat
             guard let self = self else { return }
             ImportPanelPresenter.presentImportPanel(tunnelsManager: self.tunnelsManager, sourceVC: self)
         }
+        noTunnelsVC.onDraggedFileURLs = { [weak self, weak noTunnelsVC] urls in
+            guard let self = self else { return }
+            TunnelImporter.importFromFile(urls: urls, into: self.tunnelsManager, sourceVC: noTunnelsVC, errorPresenterType: ErrorPresenter.self)
+        }
         setTunnelDetailContentVC(noTunnelsVC)
         self.tunnelDetailVC = nil
     }
